@@ -1,0 +1,29 @@
+
+
+CHIP ParityGenerator{
+	IN X[8],Y[8] ;
+	OUT P1,P2,Z;
+
+	PARTS:
+	Xor(a=X[0],b=X[1],out=Xxor0to1);
+	Xor(a=X[2],b=X[3],out=Xxor2to3);
+	Xor(a=X[4],b=X[5],out=Xxor4to5);
+	Xor(a=X[6],b=X[7],out=Xxor6to7);
+
+	Xor(a=Xxor0to1,b=Xxor2to3,out=Xxor0to3);
+	Xor(a=Xxor4to5,b=Xxor6to7,out=Xxor4to7);
+
+	Xor(a=Xxor0to3,b=Xxor4to7,out=tempP1, out=P1);
+
+	Xor(a=Y[0],b=Y[1],out=Yxor0to1);
+	Xor(a=Y[2],b=Y[3],out=Yxor2to3);
+	Xor(a=Y[4],b=Y[5],out=Yxor4to5);
+	Xor(a=Y[6],b=Y[7],out=Yxor6to7);
+
+	Xor(a=Yxor0to1,b=Yxor2to3,out=Yxor0to3);
+	Xor(a=Yxor4to5,b=Yxor6to7,out=Yxor4to7);
+
+	Xor(a=Yxor0to3,b=Yxor4to7,out=tempP2, out=P2);
+
+	Xor(a=tempP1,b=tempP2,out=Z);
+}

@@ -1,0 +1,10 @@
+
+CHIP PriorityMUX2bit4to1{
+
+	IN R0,R1,R2,R3,X0[2],X1[2],X2[2],X3[2] ;
+	OUT Y0[2];
+
+	PARTS:
+	PriorityEncoder42(X0=R0,X1=R1,X2=R2,X3=R3,Y0=S0,Y1=S1);
+	MUX2bit4to1(X0=X0,X1=X1,X2=X2,X3=X3,S1=S1,S0=S0,Y0=Y0);
+	}

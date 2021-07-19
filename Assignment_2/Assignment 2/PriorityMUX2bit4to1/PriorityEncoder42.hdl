@@ -1,0 +1,19 @@
+
+CHIP PriorityEncoder42{
+
+	IN X0,X1,X2,X3 ;
+	OUT Y0,Y1;
+
+	PARTS:
+	Not(in=X0,out=notX0);
+	Not(in=X1,out=notX1);
+	Not(in=X2,out=notX2);
+	Not(in=X3,out=notX3);	
+
+	And(a=notX0,b=notX1,out=Y1);
+	
+	And(a=notX0,b=notX2,out=half1);	
+	And(a=notX0,b=X1,out=half2);
+	Or(a=half1,b=half2,out=Y0);
+
+}

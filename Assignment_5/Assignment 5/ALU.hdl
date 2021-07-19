@@ -1,0 +1,61 @@
+CHIP ALU{
+	IN X[8],Y[8],US,S[3];
+	OUT Z[8],OF,EQ;
+	
+	PARTS:
+	//These are our three select lines
+	Not(in=S[0],out=nS0);
+	Not(in=S[1],out=nS1);
+	Not(in=S[2],out=nS2);
+	
+	//We output a null array
+	Null8(Z=Z00);
+
+	//We output the AND combination of our two arrays
+	AndALU8(X=X,Y=Y,Z=Z01);
+	
+	//We output the OR combination of our two arrays
+	OrALU8(X=X,Y=Y,Z=Z02);
+
+	//We ouput the XOR combination of our two arrays
+	XorALU8(X=X,Y=Y,Z=Z03);
+
+	//We output the 8 bit unsigned sum of our two arrays
+	CLA8bitwithHT(X=X,Y=Y,AS=S[0],signed=US,S=Z04,OF=OFA);
+
+	//We output the 8 bit signed sum of our two arrays
+	CLA8bitwithHT(X=X,Y=Y,AS=S[0],signed=US,S=Z05,OF=OFS);
+	
+	//We output the 8 bit unsigned product of our two arrays
+	CSA8bitunsigned(X=X,Y=Y,P=Z06,OF=OFUMUL);
+
+	//We output the 8 bit signed product of our two arrays
+	CSA8bitsigned(X=X,Y=Y,P=Z07,OF=OFIMUL);
+
+	//We then output the correct array using select lines
+	MUX8bit4to1(X00=Z00,X01=Z01,X02=Z02,X03=Z03,S1=S[1],S0=S[0],R=A);
+	MUX8bit4to1(X00=Z04,X01=Z05,X02=Z06,X03=Z07,S1=S[1],S0=S[0],R=B);
+	MUX8bit2to1(X00=A,X01=B,S0=S[2],R=Z);
+
+
+	//This is our check for equality of two arrays
+	Xnor(a=X[0],b=Y[0],out=EQ0);
+	Xnor(a=X[1],b=Y[1],out=EQ1);
+	Xnor(a=X[2],b=Y[2],out=EQ2);
+	Xnor(a=X[3],b=Y[3],out=EQ3);
+	Xnor(a=X[4],b=Y[4],out=EQ4);
+	Xnor(a=X[5],b=Y[5],out=EQ5);
+	Xnor(a=X[6],b=Y[6],out=EQ6);
+	Xnor(a=X[7],b=Y[7],out=EQ7);
+	And8(a=EQ0,b=EQ1,c=EQ2,d=EQ3,e=EQ4,f=EQ5,g=EQ6,h=EQ7,out=EQ);
+
+	//This is our overflow output
+	And4(a=S[2],b=nS1,c=nS0,d=OFA,out=OF0);
+	And4(a=S[2],b=nS1,c=S[0],d=OFS,out=OF1);
+	And4(a=S[2],b=S[1],c=nS0,d=OFUMUL,out=OF2);
+	And4(a=S[2],b=S[1],c=S[0],d=OFIMUL,out=OF3);	
+	Or4(a=OF0,b=OF1,c=OF2,d=OF3,out=OF);
+
+
+}
+	

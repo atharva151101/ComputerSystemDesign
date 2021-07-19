@@ -1,0 +1,247 @@
+CHIP CLA16bitwithHT{
+	IN X[16],Y[16],AS,signed;
+	OUT S[16],C16,OF;
+	
+	PARTS:
+	
+	Xor(a=Y[0],b=AS,out=Z0);
+	Xor(a=Y[1],b=AS,out=Z1);
+	Xor(a=Y[2],b=AS,out=Z2);
+	Xor(a=Y[3],b=AS,out=Z3);
+	Xor(a=Y[4],b=AS,out=Z4);
+	Xor(a=Y[5],b=AS,out=Z5);
+	Xor(a=Y[6],b=AS,out=Z6);
+	Xor(a=Y[7],b=AS,out=Z7);
+	Xor(a=Y[8],b=AS,out=Z8);
+	Xor(a=Y[9],b=AS,out=Z9);
+	Xor(a=Y[10],b=AS,out=Z10);
+	Xor(a=Y[11],b=AS,out=Z11);
+	Xor(a=Y[12],b=AS,out=Z12);
+	Xor(a=Y[13],b=AS,out=Z13);
+	Xor(a=Y[14],b=AS,out=Z14);
+	Xor(a=Y[15],b=AS,out=Z15);	
+
+	Xor(a=X[0],b=Z0,out=P0);
+	Xor(a=X[1],b=Z1,out=P1);
+	Xor(a=X[2],b=Z2,out=P2);
+	Xor(a=X[3],b=Z3,out=P3);
+	Xor(a=X[4],b=Z4,out=P4);
+	Xor(a=X[5],b=Z5,out=P5);
+	Xor(a=X[6],b=Z6,out=P6);
+	Xor(a=X[7],b=Z7,out=P7);
+	Xor(a=X[8],b=Z8,out=P8);
+	Xor(a=X[9],b=Z9,out=P9);
+	Xor(a=X[10],b=Z10,out=P10);
+	Xor(a=X[11],b=Z11,out=P11);
+	Xor(a=X[12],b=Z12,out=P12);
+	Xor(a=X[13],b=Z13,out=P13);
+	Xor(a=X[14],b=Z14,out=P14);
+	Xor(a=X[15],b=Z15,out=P15);
+	
+
+	And(a=X[0],b=Z0,out=G0);
+	And(a=X[1],b=Z1,out=G1);
+	And(a=X[2],b=Z2,out=G2);
+	And(a=X[3],b=Z3,out=G3);
+	And(a=X[4],b=Z4,out=G4);
+	And(a=X[5],b=Z5,out=G5);
+	And(a=X[6],b=Z6,out=G6);
+	And(a=X[7],b=Z7,out=G7);
+	And(a=X[8],b=Z8,out=G8);
+	And(a=X[9],b=Z9,out=G9);
+	And(a=X[10],b=Z10,out=G10);
+	And(a=X[11],b=Z11,out=G11);
+	And(a=X[12],b=Z12,out=G12);
+	And(a=X[13],b=Z13,out=G13);
+	And(a=X[14],b=Z14,out=G14);
+	And(a=X[15],b=Z15,out=G15);
+
+
+
+	//Generating PIi's and other partial terms as required. T0i denotes the C0/C4/C8/C12 term in the expansion of Ci
+
+	And(a=P0,b=P1,out=p1PI0,out=T02);
+	And(a=P2,b=p1PI0,out=p2PI0,out=T03);
+	And(a=P3,b=p2PI0,out=PI0);
+	
+	And(a=P4,b=P5,out=p1PI1,out=T06);
+	And(a=P6,b=p1PI1,out=p2PI1,out=T07);
+	And(a=P7,b=p2PI1,out=PI1);
+	
+	And(a=P8,b=P9,out=p1PI2,out=T010);
+	And(a=P10,b=p1PI2,out=p2PI2,out=T011);
+	And(a=P11,b=p2PI2,out=PI2);
+	
+	And(a=P12,b=P13,out=p1PI3,out=T014);
+	And(a=P14,b=p1PI3,out=p2PI3,out=T015);
+	And(a=P15,b=p2PI3,out=PI3);
+	
+	
+
+
+
+	//Generating GIi's and all the partial G terms for the other Ci. Eg:T12 - represents the 1st G term in C2, T38 - represents the 3rd G term in C8 and so on. piGIx represents part i of GIx. 
+
+	And(a=P1,b=G0,out=T12);
+	And(a=P2,b=T12,out=T13);
+	And(a=P3,b=T13,out=p1GI0);
+	And(a=P2,b=G1,out=T23);
+	And(a=P3,b=T23,out=p2GI0);
+	And(a=P3,b=G2,out=p3GI0);
+	Or(a=p1GI0,b=p2GI0,out=h1GI0);
+	Or(a=p3GI0,b=G3,out=h2GI0);
+	Or(a=h1GI0,b=h2GI0,out=GI0);
+
+	And(a=P5,b=G4,out=T16);
+	And(a=P6,b=T16,out=T17);
+	And(a=P7,b=T17,out=p1GI1);
+	And(a=P6,b=G5,out=T27);
+	And(a=P7,b=T27,out=p2GI1);
+	And(a=P7,b=G6,out=p3GI1);
+	Or(a=p1GI1,b=p2GI1,out=h1GI1);
+	Or(a=p3GI1,b=G7,out=h2GI1);
+	Or(a=h1GI1,b=h2GI1,out=GI1);
+	
+	And(a=P9,b=G8,out=T110);
+	And(a=P10,b=T110,out=T111);
+	And(a=P11,b=T111,out=p1GI2);
+	And(a=P10,b=G9,out=T211);
+	And(a=P11,b=T211,out=p2GI2);
+	And(a=P11,b=G10,out=p3GI2);
+	Or(a=p1GI2,b=p2GI2,out=h1GI2);
+	Or(a=p3GI2,b=G11,out=h2GI2);
+	Or(a=h1GI2,b=h2GI2,out=GI2);
+	
+	And(a=P13,b=G12,out=T114);
+	And(a=P14,b=T114,out=T115);
+	And(a=P15,b=T115,out=p1GI3);
+	And(a=P14,b=G13,out=T215);
+	And(a=P15,b=T215,out=p2GI3);
+	And(a=P15,b=G14,out=p3GI3);
+	Or(a=p1GI3,b=p2GI3,out=h1GI3);
+	Or(a=p3GI3,b=G15,out=h2GI3);
+	Or(a=h1GI3,b=h2GI3,out=GI3);
+
+
+	//We shall now calculate the terms required for c4,c8,c12,c16 and then generate them using the same logic as a 4 bit CLA adder.
+
+
+	//Terms associated with C0
+	And(a=PI0,b=AS,out=TI01);
+	And(a=PI1,b=TI01,out=TI02);
+	And(a=PI2,b=TI02,out=TI03);
+	And(a=PI3,b=TI03,out=TI04);
+	
+	//Terms associated with GI0
+	And(a=PI1,b=GI0,out=TI12);
+	And(a=PI2,b=TI12,out=TI13);
+	And(a=PI3,b=TI13,out=TI14);
+
+	//Terms associated with GI1
+	And(a=PI2,b=GI1,out=TI23);
+	And(a=PI3,b=TI23,out=TI24);
+
+	//Terms associated with GI2
+	And(a=PI3,b=GI2,out=TI34);
+
+	//Generating c4,c8,c12,c16
+	Or(a=TI01,b=GI0,out=C4);
+
+	Or(a=TI02,b=TI12,out=p1C8);
+	Or(a=p1C8,b=GI1,out=C8);
+	
+	Or(a=TI03,b=TI13,out=p1C12);
+	Or(a=p1C12,b=TI23,out=p2C12);
+	Or(a=p2C12,b=GI2,out=C12);
+
+	Or(a=TI04,b=TI14,out=p1C16);
+	Or(a=p1C16,b=TI24,out=p2C16);
+	Or(a=p2C16,b=TI34,out=p3C16);
+	Or(a=p3C16,b=GI3,out=C16,out=C16OF);
+
+
+
+	//Now we calculate all other Ci terms
+	
+	//These X terms are the first terms in the C rep containing (Pi...Cx)
+	And(a=P0,b=AS,out=X01);
+	And(a=T02,b=AS,out=X02);
+	And(a=T03,b=AS,out=X03);
+	And(a=P4,b=C4,out=X05);
+	And(a=T06,b=C4,out=X06);
+	And(a=T07,b=C4,out=X07);
+	And(a=P8,b=C8,out=X09);
+	And(a=T010,b=C8,out=X010);
+	And(a=T011,b=C8,out=X011);
+	And(a=P12,b=C12,out=X013);
+	And(a=T014,b=C12,out=X014);
+	And(a=T015,b=C12,out=X015);
+	
+	
+	//We now merge the X term, and all T1,T2 terms belonging to Ci
+	Or(a=X01,b=G0,out=C1);
+
+	Or(a=X02,b=T12,out=p1C2);
+	Or(a=p1C2,b=G1,out=C2);
+	
+	Or(a=X03,b=T13,out=p1C3);
+	Or(a=p1C3,b=T23,out=p2C3);
+	Or(a=p2C3,b=G2,out=C3);
+	
+	Or(a=X05,b=G4,out=C5);
+
+	Or(a=X06,b=T16,out=p1C6);
+	Or(a=p1C6,b=G5,out=C6);
+	
+	Or(a=X07,b=T17,out=p1C7);
+	Or(a=p1C7,b=T27,out=p2C7);
+	Or(a=p2C7,b=G6,out=C7);
+	
+	Or(a=X09,b=G8,out=C9);
+
+	Or(a=X010,b=T110,out=p1C10);
+	Or(a=p1C10,b=G9,out=C10);
+	
+	Or(a=X011,b=T111,out=p1C11);
+	Or(a=p1C11,b=T211,out=p2C11);
+	Or(a=p2C11,b=G10,out=C11);
+	
+	Or(a=X013,b=G12,out=C13);
+
+	Or(a=X014,b=T114,out=p1C14);
+	Or(a=p1C14,b=G13,out=C14);
+	
+	Or(a=X015,b=T115,out=p1C15);
+	Or(a=p1C15,b=T215,out=p2C15);
+	Or(a=p2C15,b=G14,out=C15);
+	
+	//We finally generate sum bits
+	
+	Xor(a=AS,b=P0,out=S[0]);
+	Xor(a=C1,b=P1,out=S[1]);
+	Xor(a=C2,b=P2,out=S[2]);
+	Xor(a=C3,b=P3,out=S[3]);
+	Xor(a=C4,b=P4,out=S[4]);
+	Xor(a=C5,b=P5,out=S[5]);
+	Xor(a=C6,b=P6,out=S[6]);
+	Xor(a=C7,b=P7,out=S[7]);
+	Xor(a=C8,b=P8,out=S[8]);
+	Xor(a=C9,b=P9,out=S[9]);
+	Xor(a=C10,b=P10,out=S[10]);
+	Xor(a=C11,b=P11,out=S[11]);
+	Xor(a=C12,b=P12,out=S[12]);
+	Xor(a=C13,b=P13,out=S[13]);
+	Xor(a=C14,b=P14,out=S[14]);
+	Xor(a=C15,b=P15,out=S[15]);
+
+	//We generate overflow seperately depending on signed and unsigned cases
+	Not(in=signed, out=unsigned);
+	Not(in=AS, out=notAS);
+	Xor(a=C16OF,b=C15,out=OFsign);
+	And(a=OFsign,b=signed,out=OFsigned);	
+	And(a=C16OF,b=unsigned,out=p1OFunsigned);
+	And(a=p1OFunsigned,b=notAS,out=OFunsigned);
+	Or(a=OFsigned,b=OFunsigned,out=OF);
+		
+		
+}

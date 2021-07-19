@@ -1,0 +1,39 @@
+CHIP Cla4b{
+	IN X[4],Y[4],C0;
+	OUT C,S[4],C30F;
+
+	PARTS:
+	Xor(a=X[0],b=Y[0],out=P0);
+	Xor(a=X[1],b=Y[1],out=P1);
+	Xor(a=X[2],b=Y[2],out=P2);
+	Xor(a=X[3],b=Y[3],out=P3);
+
+	And(a=X[0],b=Y[0],out=G0);
+	And(a=X[1],b=Y[1],out=G1);
+	And(a=X[2],b=Y[2],out=G2);
+	And(a=X[3],b=Y[3],out=G3);
+
+   	And(a=P0,b=C0,out=C11);
+	Or(a=C11,b=G0,out=C1);
+
+	AND3(a=P1,b=P0,c=C0,out=C21);
+	And(a=P1,b=G0,out=C22);
+   	OR3(a=C21,b=C22,c=G1,out=C2);
+
+    	AND4(a=P2,b=P1,c=P0,d=C0,out=C31);
+    	AND3(a=P2,b=P1,c=G0,out=C32);
+    	And(a=P2,b=G1,out=C33);
+    	OR4(a=C31,b=C32,c=C33,d=G2,out=C3,out=C30F);
+
+    	AND5(a=P3,b=P2,c=P1,d=P0,e=C0,out=C41);
+    	AND4(a=P3,b=P2,c=P1,d=G0,out=C42);
+    	AND3(a=P3,b=P2,c=G1,out=C43);
+    	And(a=P3,b=G2,out=C44);
+    	OR5(a=C41,b=C42,c=C43,d=C44,e=G3,out=C);
+    
+    	Xor(a=P0,b=C0,out=S[0]);
+    	Xor(a=P1,b=C1,out=S[1]);
+    	Xor(a=P2,b=C2,out=S[2]);
+    	Xor(a=P3,b=C3,out=S[3]);
+
+}

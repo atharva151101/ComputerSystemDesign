@@ -1,0 +1,266 @@
+CHIP CSA8bitunsigned{
+	IN X[8],Y[8];
+	OUT P[8],OF;
+	
+	PARTS:
+	
+	//We first generate every partial product - PPxy denotes the yth bit of Partial Product x 
+	And(a=X[0],b=Y[0],out=PP000);
+	And(a=X[1],b=Y[0],out=PP001);
+	And(a=X[2],b=Y[0],out=PP002);
+	And(a=X[3],b=Y[0],out=PP003);
+	And(a=X[4],b=Y[0],out=PP004);
+	And(a=X[5],b=Y[0],out=PP005);
+	And(a=X[6],b=Y[0],out=PP006);
+	And(a=X[7],b=Y[0],out=PP007);
+
+	And(a=X[0],b=Y[1],out=PP101);
+	And(a=X[1],b=Y[1],out=PP102);
+	And(a=X[2],b=Y[1],out=PP103);
+	And(a=X[3],b=Y[1],out=PP104);
+	And(a=X[4],b=Y[1],out=PP105);
+	And(a=X[5],b=Y[1],out=PP106);
+	And(a=X[6],b=Y[1],out=PP107);
+	And(a=X[7],b=Y[1],out=PP108);
+
+	And(a=X[0],b=Y[2],out=PP202);
+	And(a=X[1],b=Y[2],out=PP203);
+	And(a=X[2],b=Y[2],out=PP204);
+	And(a=X[3],b=Y[2],out=PP205);
+	And(a=X[4],b=Y[2],out=PP206);
+	And(a=X[5],b=Y[2],out=PP207);
+	And(a=X[6],b=Y[2],out=PP208);
+	And(a=X[7],b=Y[2],out=PP209);
+
+	And(a=X[0],b=Y[3],out=PP303);
+	And(a=X[1],b=Y[3],out=PP304);
+	And(a=X[2],b=Y[3],out=PP305);
+	And(a=X[3],b=Y[3],out=PP306);
+	And(a=X[4],b=Y[3],out=PP307);
+	And(a=X[5],b=Y[3],out=PP308);
+	And(a=X[6],b=Y[3],out=PP309);
+	And(a=X[7],b=Y[3],out=PP310);
+
+	And(a=X[0],b=Y[4],out=PP404);
+	And(a=X[1],b=Y[4],out=PP405);
+	And(a=X[2],b=Y[4],out=PP406);
+	And(a=X[3],b=Y[4],out=PP407);
+	And(a=X[4],b=Y[4],out=PP408);
+	And(a=X[5],b=Y[4],out=PP409);
+	And(a=X[6],b=Y[4],out=PP410);
+	And(a=X[7],b=Y[4],out=PP411);
+
+	And(a=X[0],b=Y[5],out=PP505);
+	And(a=X[1],b=Y[5],out=PP506);
+	And(a=X[2],b=Y[5],out=PP507);
+	And(a=X[3],b=Y[5],out=PP508);
+	And(a=X[4],b=Y[5],out=PP509);
+	And(a=X[5],b=Y[5],out=PP510);
+	And(a=X[6],b=Y[5],out=PP511);
+	And(a=X[7],b=Y[5],out=PP512);
+
+	And(a=X[0],b=Y[6],out=PP606);
+	And(a=X[1],b=Y[6],out=PP607);
+	And(a=X[2],b=Y[6],out=PP608);
+	And(a=X[3],b=Y[6],out=PP609);
+	And(a=X[4],b=Y[6],out=PP610);
+	And(a=X[5],b=Y[6],out=PP611);
+	And(a=X[6],b=Y[6],out=PP612);
+	And(a=X[7],b=Y[6],out=PP613);
+
+	And(a=X[0],b=Y[7],out=PP707);
+	And(a=X[1],b=Y[7],out=PP708);
+	And(a=X[2],b=Y[7],out=PP709);
+	And(a=X[3],b=Y[7],out=PP710);
+	And(a=X[4],b=Y[7],out=PP711);
+	And(a=X[5],b=Y[7],out=PP712);
+	And(a=X[6],b=Y[7],out=PP713);
+	And(a=X[7],b=Y[7],out=PP714);
+	
+	//Trailing zeros of the partial products generated
+	Not(in=true,out=PP100);
+	Not(in=true,out=PP200);
+	Not(in=true,out=PP201);
+	Not(in=true,out=PP300);
+	Not(in=true,out=PP301);
+	Not(in=true,out=PP302);
+	Not(in=true,out=PP400);
+	Not(in=true,out=PP401);
+	Not(in=true,out=PP402);
+	Not(in=true,out=PP403);
+	Not(in=true,out=PP500);
+	Not(in=true,out=PP501);
+	Not(in=true,out=PP502);
+	Not(in=true,out=PP503);
+	Not(in=true,out=PP504);
+	Not(in=true,out=PP600);
+	Not(in=true,out=PP601);
+	Not(in=true,out=PP602);
+	Not(in=true,out=PP603);
+	Not(in=true,out=PP604);
+	Not(in=true,out=PP605);
+	Not(in=true,out=PP700);
+	Not(in=true,out=PP701);
+	Not(in=true,out=PP702);
+	Not(in=true,out=PP703);
+	Not(in=true,out=PP704);
+	Not(in=true,out=PP705);
+	Not(in=true,out=PP706);
+	
+	//Sign Extension for the partial products - All positive here, so all 0's (unsigned)
+	Not(in=true,out=PP008);
+	Not(in=true,out=PP009);
+	Not(in=true,out=PP010);
+	Not(in=true,out=PP011);
+	Not(in=true,out=PP012);
+	Not(in=true,out=PP013);
+	Not(in=true,out=PP014);
+	Not(in=true,out=PP015);
+	Not(in=true,out=PP109);
+	Not(in=true,out=PP110);
+	Not(in=true,out=PP111);
+	Not(in=true,out=PP112);
+	Not(in=true,out=PP113);
+	Not(in=true,out=PP114);
+	Not(in=true,out=PP115);
+	Not(in=true,out=PP210);
+	Not(in=true,out=PP211);
+	Not(in=true,out=PP212);
+	Not(in=true,out=PP213);
+	Not(in=true,out=PP214);
+	Not(in=true,out=PP215);
+	Not(in=true,out=PP311);
+	Not(in=true,out=PP312);
+	Not(in=true,out=PP313);
+	Not(in=true,out=PP314);
+	Not(in=true,out=PP315);
+	Not(in=true,out=PP412);
+	Not(in=true,out=PP413);
+	Not(in=true,out=PP414);
+	Not(in=true,out=PP415);
+	Not(in=true,out=PP513);
+	Not(in=true,out=PP514);
+	Not(in=true,out=PP515);
+	Not(in=true,out=PP614);
+	Not(in=true,out=PP615);
+	Not(in=true,out=PP715);
+
+	//The carry terms at 0 position are all false	
+	Not(in=true,out=C100);
+	Not(in=true,out=C200);
+	Not(in=true,out=C300);
+	Not(in=true,out=C400);
+	Not(in=true,out=C500);
+	Not(in=true,out=C600);
+
+	//We now perform the CSA mechanism and combine every set of 3 summands to give us 2 new summands
+	FullAdder(X=PP200,Y=PP100,AS=PP000,S=S100,C1=C101);
+	FullAdder(X=PP201,Y=PP101,AS=PP001,S=S101,C1=C102);
+	FullAdder(X=PP202,Y=PP102,AS=PP002,S=S102,C1=C103);
+	FullAdder(X=PP203,Y=PP103,AS=PP003,S=S103,C1=C104);
+	FullAdder(X=PP204,Y=PP104,AS=PP004,S=S104,C1=C105);
+	FullAdder(X=PP205,Y=PP105,AS=PP005,S=S105,C1=C106);
+	FullAdder(X=PP206,Y=PP106,AS=PP006,S=S106,C1=C107);
+	FullAdder(X=PP207,Y=PP107,AS=PP007,S=S107,C1=C108);
+	FullAdder(X=PP208,Y=PP108,AS=PP008,S=S108,C1=C109);
+	FullAdder(X=PP209,Y=PP109,AS=PP009,S=S109,C1=C110);
+	FullAdder(X=PP210,Y=PP110,AS=PP010,S=S110,C1=C111);
+	FullAdder(X=PP211,Y=PP111,AS=PP011,S=S111,C1=C112);
+	FullAdder(X=PP212,Y=PP112,AS=PP012,S=S112,C1=C113);
+	FullAdder(X=PP213,Y=PP113,AS=PP013,S=S113,C1=C114);
+	FullAdder(X=PP214,Y=PP114,AS=PP014,S=S114,C1=C115);
+	FullAdder(X=PP215,Y=PP115,AS=PP015,S=S115,C1=C116);
+
+	FullAdder(X=PP300,Y=PP400,AS=PP500,S=S200,C1=C201);
+	FullAdder(X=PP301,Y=PP401,AS=PP501,S=S201,C1=C202);
+	FullAdder(X=PP302,Y=PP402,AS=PP502,S=S202,C1=C203);
+	FullAdder(X=PP303,Y=PP403,AS=PP503,S=S203,C1=C204);
+	FullAdder(X=PP304,Y=PP404,AS=PP504,S=S204,C1=C205);
+	FullAdder(X=PP305,Y=PP405,AS=PP505,S=S205,C1=C206);
+	FullAdder(X=PP306,Y=PP406,AS=PP506,S=S206,C1=C207);
+	FullAdder(X=PP307,Y=PP407,AS=PP507,S=S207,C1=C208);
+	FullAdder(X=PP308,Y=PP408,AS=PP508,S=S208,C1=C209);
+	FullAdder(X=PP309,Y=PP409,AS=PP509,S=S209,C1=C210);
+	FullAdder(X=PP310,Y=PP410,AS=PP510,S=S210,C1=C211);
+	FullAdder(X=PP311,Y=PP411,AS=PP511,S=S211,C1=C212);
+	FullAdder(X=PP312,Y=PP412,AS=PP512,S=S212,C1=C213);
+	FullAdder(X=PP313,Y=PP413,AS=PP513,S=S213,C1=C214);
+	FullAdder(X=PP314,Y=PP414,AS=PP514,S=S214,C1=C215);
+	FullAdder(X=PP315,Y=PP415,AS=PP515,S=S215,C1=C216);
+	
+	FullAdder(X=PP600,Y=PP700,AS=S100,S=S300,C1=C301);
+	FullAdder(X=PP601,Y=PP701,AS=S101,S=S301,C1=C302);
+	FullAdder(X=PP602,Y=PP702,AS=S102,S=S302,C1=C303);
+	FullAdder(X=PP603,Y=PP703,AS=S103,S=S303,C1=C304);
+	FullAdder(X=PP604,Y=PP704,AS=S104,S=S304,C1=C305);
+	FullAdder(X=PP605,Y=PP705,AS=S105,S=S305,C1=C306);
+	FullAdder(X=PP606,Y=PP706,AS=S106,S=S306,C1=C307);
+	FullAdder(X=PP607,Y=PP707,AS=S107,S=S307,C1=C308);
+	FullAdder(X=PP608,Y=PP708,AS=S108,S=S308,C1=C309);
+	FullAdder(X=PP609,Y=PP709,AS=S109,S=S309,C1=C310);
+	FullAdder(X=PP610,Y=PP710,AS=S110,S=S310,C1=C311);
+	FullAdder(X=PP611,Y=PP711,AS=S111,S=S311,C1=C312);
+	FullAdder(X=PP612,Y=PP712,AS=S112,S=S312,C1=C313);
+	FullAdder(X=PP613,Y=PP713,AS=S113,S=S313,C1=C314);
+	FullAdder(X=PP614,Y=PP714,AS=S114,S=S314,C1=C315);
+	FullAdder(X=PP615,Y=PP715,AS=S115,S=S315,C1=C316);
+	
+	FullAdder(X=S200,Y=C200,AS=C100,S=S400,C1=C401);
+	FullAdder(X=S201,Y=C201,AS=C101,S=S401,C1=C402);
+	FullAdder(X=S202,Y=C202,AS=C102,S=S402,C1=C403);
+	FullAdder(X=S203,Y=C203,AS=C103,S=S403,C1=C404);
+	FullAdder(X=S204,Y=C204,AS=C104,S=S404,C1=C405);
+	FullAdder(X=S205,Y=C205,AS=C105,S=S405,C1=C406);
+	FullAdder(X=S206,Y=C206,AS=C106,S=S406,C1=C407);
+	FullAdder(X=S207,Y=C207,AS=C107,S=S407,C1=C408);
+	FullAdder(X=S208,Y=C208,AS=C108,S=S408,C1=C409);
+	FullAdder(X=S209,Y=C209,AS=C109,S=S409,C1=C410);
+	FullAdder(X=S210,Y=C210,AS=C110,S=S410,C1=C411);
+	FullAdder(X=S211,Y=C211,AS=C111,S=S411,C1=C412);
+	FullAdder(X=S212,Y=C212,AS=C112,S=S412,C1=C413);
+	FullAdder(X=S213,Y=C213,AS=C113,S=S413,C1=C414);
+	FullAdder(X=S214,Y=C214,AS=C114,S=S414,C1=C415);
+	FullAdder(X=S215,Y=C215,AS=C115,S=S415,C1=C416);
+	
+	FullAdder(X=S300,Y=C300,AS=C400,S=S500,C1=C501);
+	FullAdder(X=S301,Y=C301,AS=C401,S=S501,C1=C502);
+	FullAdder(X=S302,Y=C302,AS=C402,S=S502,C1=C503);
+	FullAdder(X=S303,Y=C303,AS=C403,S=S503,C1=C504);
+	FullAdder(X=S304,Y=C304,AS=C404,S=S504,C1=C505);
+	FullAdder(X=S305,Y=C305,AS=C405,S=S505,C1=C506);
+	FullAdder(X=S306,Y=C306,AS=C406,S=S506,C1=C507);
+	FullAdder(X=S307,Y=C307,AS=C407,S=S507,C1=C508);
+	FullAdder(X=S308,Y=C308,AS=C408,S=S508,C1=C509);
+	FullAdder(X=S309,Y=C309,AS=C409,S=S509,C1=C510);
+	FullAdder(X=S310,Y=C310,AS=C410,S=S510,C1=C511);
+	FullAdder(X=S311,Y=C311,AS=C411,S=S511,C1=C512);
+	FullAdder(X=S312,Y=C312,AS=C412,S=S512,C1=C513);
+	FullAdder(X=S313,Y=C313,AS=C413,S=S513,C1=C514);
+	FullAdder(X=S314,Y=C314,AS=C414,S=S514,C1=C515);
+	FullAdder(X=S315,Y=C315,AS=C415,S=S515,C1=C516);
+
+	FullAdder(X=S400,Y=S500,AS=C500,S=S600,C1=C601);
+	FullAdder(X=S401,Y=S501,AS=C501,S=S601,C1=C602);
+	FullAdder(X=S402,Y=S502,AS=C502,S=S602,C1=C603);
+	FullAdder(X=S403,Y=S503,AS=C503,S=S603,C1=C604);
+	FullAdder(X=S404,Y=S504,AS=C504,S=S604,C1=C605);
+	FullAdder(X=S405,Y=S505,AS=C505,S=S605,C1=C606);
+	FullAdder(X=S406,Y=S506,AS=C506,S=S606,C1=C607);
+	FullAdder(X=S407,Y=S507,AS=C507,S=S607,C1=C608);
+	FullAdder(X=S408,Y=S508,AS=C508,S=S608,C1=C609);
+	FullAdder(X=S409,Y=S509,AS=C509,S=S609,C1=C610);
+	FullAdder(X=S410,Y=S510,AS=C510,S=S610,C1=C611);
+	FullAdder(X=S411,Y=S511,AS=C511,S=S611,C1=C612);
+	FullAdder(X=S412,Y=S512,AS=C512,S=S612,C1=C613);
+	FullAdder(X=S413,Y=S513,AS=C513,S=S613,C1=C614);
+	FullAdder(X=S414,Y=S514,AS=C514,S=S614,C1=C615);
+	FullAdder(X=S415,Y=S515,AS=C515,S=S615,C1=C616);
+
+	//Finally when we have 2 summands left, we use our 16 bit CLA
+	CLA16bitwithHT(X[0]=S600,X[1]=S601,X[2]=S602,X[3]=S603,X[4]=S604,X[5]=S605,X[6]=S606,X[7]=S607,X[8]=S608,X[9]=S609,X[10]=S610,X[11]=S611,X[12]=S612,X[13]=S613,X[14]=S614,X[15]=S615,Y[0]=C600,Y[1]=C601,Y[2]=C602,Y[3]=C603,Y[4]=C604,Y[5]=C605,Y[6]=C606,Y[7]=C607,Y[8]=C608,Y[9]=C609,Y[10]=C610,Y[11]=C611,Y[12]=C612,Y[13]=C613,Y[14]=C614,Y[15]=C615,AS=false,signed=false,S[0..7]=P[0..7],S[8]=P8,S[9]=P9,S[10]=P10,S[11]=P11,S[12]=P12,S[13]=P13,S[14]=P14,S[15]=P15,C16=C716,OF=C816);
+
+	//If any of the bits ahead of 7\8 are 1; we have an overflow
+Or8(a=P8,b=P9,c=P10,d=P11,e=P12,f=P13,g=P14,h=P15,out=OF);
+		
+
+}

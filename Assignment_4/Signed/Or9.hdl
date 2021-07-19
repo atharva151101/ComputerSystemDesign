@@ -1,0 +1,18 @@
+CHIP Or9{
+	IN a,b,c,d,e,f,g,h,i;
+	OUT out;
+	
+
+	PARTS:
+	//Or9 gate is used to combine 9 input terms at an or gate
+	Or(a=a,b=b,out=ab);
+	Or(a=ab,b=c,out=abc);
+	Or(a=abc,b=d,out=abcd);
+	Or(a=abcd,b=e,out=abcde);
+	Or(a=abcde,b=f,out=abcdef);
+	Or(a=abcdef,b=g,out=abcdefg);	
+	Or(a=abcdefg,b=h,out=abcdefgh);
+	Or(a=abcdefgh,b=i,out=out);
+	
+	
+}

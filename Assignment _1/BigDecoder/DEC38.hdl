@@ -1,0 +1,33 @@
+CHIP DEC38{
+	IN X2,X1,X0;
+	OUT Y0,Y1,Y2,Y3,Y4,Y5,Y6,Y7;
+
+	PARTS:
+	Not(in=X2,out=notX2);
+	Not(in=X1,out=notX1);
+	Not(in=X0,out=notX0);
+
+    And(a=notX2,b=notX1,out=pY0);
+    And(a=pY0,b=notX0,out=Y0);
+
+    And(a=notX2,b=notX1,out=pY1);
+    And(a=pY1,b=X0,out=Y1);
+
+    And(a=notX2,b=X1,out=pY2);
+    And(a=pY2,b=notX0,out=Y2);
+
+    And(a=notX2,b=X1,out=pY3);
+    And(a=pY3,b=X0,out=Y3);
+
+    And(a=X2,b=notX1,out=pY4);
+    And(a=pY4,b=notX0,out=Y4);
+
+    And(a=X2,b=notX1,out=pY5);
+    And(a=pY5,b=X0,out=Y5);
+
+    And(a=X2,b=X1,out=pY6);
+    And(a=pY6,b=notX0,out=Y6);
+
+    And(a=X2,b=X1,out=pY7);
+    And(a=pY7,b=X0,out=Y7); 
+}

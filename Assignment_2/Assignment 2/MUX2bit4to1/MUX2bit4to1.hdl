@@ -1,0 +1,48 @@
+CHIP MUX2bit4to1{
+
+	IN X0[2],X1[2],X2[2],X3[2],S1,S0;
+	OUT Y0[2];
+	
+	PARTS:
+	Not (in=S1, out=notS1);
+	Not (in=S0, out=notS0);
+	
+		
+	And (a=X0[0], 	b=notS1,	out=p1T1);
+	And (a=p1T1,	b=notS0, 	out=T1);
+	
+	And (a=X1[0], 	b=notS1, 	out=p1T2);
+	And (a=p1T2,	b=S0, 		out=T2);
+	
+	And (a=X2[0], 	b=S1,	 	out=p1T3);
+	And (a=p1T3,	b=notS0, 	out=T3);
+	
+	And (a=X3[0], 	b=S1,	 	out=p1T4);
+	And (a=p1T4,	b=S0, 		out=T4);
+
+	Or(a=T1, b=T2, out=p1Y0);
+	Or(a=T3, b=T4, out=p2Y0);
+
+	Or(a=p1Y0, b=p2Y0, out=Y0[0]);
+	
+	And (a=X0[1], 	b=notS1,	out=p1T5);
+	And (a=p1T5, 	b=notS0, 	out=T5);
+	
+	And (a=X1[1], 	b=notS1, 	out=p1T6);
+	And (a=p1T6, 	b=S0, 		out=T6);
+	
+	And (a=X2[1], 	b=S1,	 	out=p1T7);
+	And (a=p1T7, 	b=notS0, 	out=T7);
+	
+	And (a=X3[1], 	b=S1,	 	out=p1T8);
+	And (a=p1T8, 	b=S0, 		out=T8);
+
+	Or(a=T5, b=T6, out=p3Y0);
+	Or(a=T7, b=T8, out=p4Y0);
+
+	Or(a=p3Y0, b=p4Y0, out=Y0[1]);
+
+	}
+	
+
+	

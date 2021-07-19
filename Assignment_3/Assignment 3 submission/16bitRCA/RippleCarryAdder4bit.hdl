@@ -1,0 +1,15 @@
+CHIP RippleCarryAdder4bit{
+
+	IN  X[4],Y[4],C4k,signed;
+	OUT S[4],C4knext,C3OF;
+
+	PARTS:
+	
+	FullAdder(Xi=X[0],Yi=Y[0],Ci=C4k,S=S[0],Cnext=C1);
+	FullAdder(Xi=X[1],Yi=Y[1],Ci=C1,S=S[1],Cnext=C2);
+	FullAdder(Xi=X[2],Yi=Y[2],Ci=C2,S=S[2],Cnext=C3, Cnext=C3OF);
+	FullAdder(Xi=X[3],Yi=Y[3],Ci=C3,S=S[3],Cnext=C4knext);
+
+	
+}
+

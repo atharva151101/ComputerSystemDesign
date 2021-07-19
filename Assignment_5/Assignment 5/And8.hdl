@@ -1,0 +1,16 @@
+CHIP And8{
+	IN a,b,c,d,e,f,g,h;
+	OUT out;
+
+	PARTS:
+	//And gate used to merge 8 inputs
+	And(a=a,b=b,out=ab);
+	And(a=ab,b=c,out=abc);
+	And(a=abc,b=d,out=abcd);
+	And(a=abcd,b=e,out=abcde);
+	And(a=abcde,b=f,out=abcdef);
+	And(a=abcdef,b=g,out=abcdefg);	
+	And(a=abcdefg,b=h,out=out);
+	
+	
+}

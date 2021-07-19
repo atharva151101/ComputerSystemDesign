@@ -1,0 +1,38 @@
+CHIP RippleCarryAdder16bit{
+	IN X[16],Y[16],AS,signed;
+	OUT S[16],C16,OF;
+
+	PARTS:
+
+	Xor(a=Y[0],b=AS,out=Z0);
+	Xor(a=Y[1],b=AS,out=Z1);
+	Xor(a=Y[2],b=AS,out=Z2);
+	Xor(a=Y[3],b=AS,out=Z3);
+	Xor(a=Y[4],b=AS,out=Z4);
+	Xor(a=Y[5],b=AS,out=Z5);
+	Xor(a=Y[6],b=AS,out=Z6);
+	Xor(a=Y[7],b=AS,out=Z7);
+	Xor(a=Y[8],b=AS,out=Z8);
+	Xor(a=Y[9],b=AS,out=Z9);
+	Xor(a=Y[10],b=AS,out=Z10);
+	Xor(a=Y[11],b=AS,out=Z11);
+	Xor(a=Y[12],b=AS,out=Z12);
+	Xor(a=Y[13],b=AS,out=Z13);
+	Xor(a=Y[14],b=AS,out=Z14);
+	Xor(a=Y[15],b=AS,out=Z15);	
+
+	RippleCarryAdder4bit(X=X[0..3],Y[0]=Z0,Y[1]=Z1,Y[2]=Z2,Y[3]=Z3,C4k=AS,S=S[0..3],C4knext=C4);
+	RippleCarryAdder4bit(X=X[4..7],Y[0]=Z4,Y[1]=Z5,Y[2]=Z6,Y[3]=Z7,C4k=C4,S=S[4..7],C4knext=C8);
+	RippleCarryAdder4bit(X=X[8..11],Y[0]=Z8,Y[1]=Z9,Y[2]=Z10,Y[3]=Z11,C4k=C8,S=S[8..11],C4knext=C12);
+	RippleCarryAdder4bit(X=X[12..15],Y[0]=Z12,Y[1]=Z13,Y[2]=Z14,Y[3]=Z15,C4k=C12,S=S[12..15],C4knext=C16,C4knext=C16OF,C3OF=C15); 
+
+	
+	//We generate overflow seperately depending on signed and unsigned cases
+	Not(in=signed, out=unsigned);
+	Not(in=AS, out=notAS);
+	Xor(a=C16OF,b=C15,out=OFsign);
+	And(a=OFsign,b=signed,out=OFsigned);	
+	And(a=C16OF,b=unsigned,out=p1OFunsigned);
+	And(a=p1OFunsigned,b=notAS,out=OFunsigned);
+	Or(a=OFsigned,b=OFunsigned,out=OF);
+}

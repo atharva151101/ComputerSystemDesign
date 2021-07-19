@@ -1,0 +1,27 @@
+CHIP BigEncoder { 
+
+	IN X0,X1,X2,X3,X4,X5,X6,X7;
+	OUT Y2,Y1,Y0,V;
+
+	PARTS:
+	Not (in=X0, out=notX0);
+	Not (in=X1, out=notX1);
+	Not (in=X2, out=notX2);
+	Not (in=X3, out=notX3);
+	Not (in=X4, out=notX4);
+	Not (in=X5, out=notX5);
+	Not (in=X6, out=notX6);
+	Not (in=X7, out=notX7);
+
+	And (a=notX0, b=notX1, out=Y21);
+	And (a=notX2, b=notX3, out=Y22);
+	And (a=Y21, b=Y22, out=Y2);
+
+	And (a=notX0, b=notX1, out=Y11);
+	And (a=notX4, b=notX5, out=Y12);
+	And (a=Y11, b=Y12, out=Y1);
+	
+	And (a=notX0, b=notX2, out=Y01);
+	And (a=notX4, b=notX6, out=Y02);
+	And (a=Y01, b=Y02, out=Y0);
+	}

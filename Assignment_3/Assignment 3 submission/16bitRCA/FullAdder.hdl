@@ -1,0 +1,17 @@
+CHIP FullAdder{
+	
+	IN  Xi,Yi,Ci;
+	OUT S,Cnext;
+
+	PARTS:
+		
+	Xor(a=Xi,b=Yi,out=Xorxy);
+	Xor(a=Xorxy,b=Ci,out=S);	
+	
+	And(a=Xi,b=Yi,out=AndXiYi);
+	And(a=Ci,b=Yi,out=AndCiYi);
+	And(a=Xi,b=Ci,out=AndXiCi);
+
+	Or(a=AndXiYi,b=AndCiYi,out=PartCnext);
+	Or(a=AndXiCi,b=PartCnext,out=Cnext);
+}
