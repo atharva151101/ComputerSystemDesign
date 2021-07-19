@@ -1,0 +1,15 @@
+CHIP Null8{
+	
+	OUT Z[8];
+	
+	PARTS:
+	Not(in=true,out=Z[0]);	
+	Not(in=true,out=Z[1]);
+	Not(in=true,out=Z[2]);
+	Not(in=true,out=Z[3]);
+	Not(in=true,out=Z[4]);
+	Not(in=true,out=Z[5]);
+	Not(in=true,out=Z[6]); 
+	Not(in=true,out=Z[7]);
+} 
+	

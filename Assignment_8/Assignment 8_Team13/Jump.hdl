@@ -1,0 +1,68 @@
+CHIP Jump{
+    IN j1,j2,j3,zero,neg;
+    OUT out;
+
+    PARTS:
+    
+    Not(in=zero,out=notzero);
+    Not(in=neg,out=notneg);
+    Not(in=j1,out=notj1);
+    Not(in=j2,out=notj2);
+    Not(in=j3,out=notj3);
+
+    And(a=notj1,b=notj2,out=nj1nj2);
+    And(a=notj1,b=j2,out=nj1j2);
+    And(a=j1,b=notj2,out=j1nj2);
+    And(a=j1,b=j2,out=j1j2);
+
+    
+	//For checking instruction JGT
+    And(a=notzero,b=notneg,out=jgt1);
+    And(a=nj1nj2,b=j3,out=jgt2);
+    And(a=jgt1,b=jgt2,out=jgt);
+
+
+  
+
+
+	//For checking instruction JEQ
+    And(a=nj1j2,b=notj3,out=jeq1);
+    And(a=jeq1,b=zero,out=jeq);
+
+
+	//for checking instruction JGE
+    Or(a=zero,b=notneg,out=jge1);
+    And(a=nj1j2,b=j3,out=jge2);
+    And(a=jge1,b=jge2,out=jge);
+
+	//For checking instruction JLT
+    And(a=notzero,b=neg,out=jlt1);
+    And(a=j1nj2,b=notj3,out=jlt2);
+    And(a=jlt1,b=jlt2,out=jlt);
+
+	//For cheking instruction JNE
+    And(a=j1nj2,b=j3,out=jne1);
+    And(a=jne1,b=notzero,out=jne);
+
+	//For checking instructions JLE 
+    Or(a=zero,b=neg,out=jle1);
+    And(a=j1j2,b=notj3,out=jle2);
+    And(a=jle1,b=jle2,out=jle);
+
+
+	//For checking instruction JMP
+    And(a=j1j2,b=j3,out=jmp);
+
+
+
+	//if any of jgt,jeq,jge,jlt,jne,jle,jmp is 1 then out bit is 1
+
+	Or(a=jgt,b=jeq,out=out1);
+        Or(a=out1,b=jge,out=out2);
+	Or(a=out2,b=jlt,out=out3);
+        Or(a=out3,b=jne,out=out4);
+        Or(a=out4,b=jle,out=out5);
+        Or(a=out5,b=jmp,out=out);
+
+
+}

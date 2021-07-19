@@ -1,0 +1,42 @@
+CHIP Check0{
+	IN X[16];
+	OUT out;
+
+	PARTS:
+	//This is a gate to check whether our entire input line is 0
+	Not(in=X[0],out=nx0);
+	Not(in=X[1],out=nx1);
+	Not(in=X[2],out=nx2);
+	Not(in=X[3],out=nx3);
+	Not(in=X[4],out=nx4);
+	Not(in=X[5],out=nx5);
+	Not(in=X[6],out=nx6);
+	Not(in=X[7],out=nx7);
+	Not(in=X[8],out=nx8);
+	Not(in=X[9],out=nx9);
+	Not(in=X[10],out=nx10);
+	Not(in=X[11],out=nx11);
+	Not(in=X[12],out=nx12);
+	Not(in=X[13],out=nx13);
+	Not(in=X[14],out=nx14);
+	Not(in=X[15],out=nx15);	
+
+	And(a=nx0,b=nx1,out=out1);
+	And(a=out1,b=nx2,out=out2);
+	And(a=out2,b=nx3,out=out3);
+	And(a=out3,b=nx4,out=out4);
+	And(a=out4,b=nx5,out=out5);
+	And(a=out5,b=nx6,out=out6);
+	And(a=out6,b=nx7,out=out7);
+	And(a=out7,b=nx8,out=out8);
+	And(a=out8,b=nx9,out=out9);
+	And(a=out9,b=nx10,out=out10);
+	And(a=out10,b=nx11,out=out11);
+	And(a=out11,b=nx12,out=out12);
+	And(a=out12,b=nx13,out=out13);
+	And(a=out13,b=nx14,out=out14);
+	And(a=out14,b=nx15,out=out);
+	
+
+
+}

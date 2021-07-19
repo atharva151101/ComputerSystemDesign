@@ -1,0 +1,48 @@
+CHIP CPU {
+
+    IN inM[16],ins[16],reset;   //in M stores the input from data memory,ins stores the instruction from instruction memory
+    OUT outMemory[16],writeM,address[15],pc[15];  //write in memory,address is address where to wirte in memory,out is output
+    
+    PARTS:
+    //We write in D if I4.I15=1,write in M if I15.I3=1,write in A if I15.I5+not(I15)=1
+   
+    And(a=ins[3],b=ins[15],out=writeM);
+    And(a=ins[4],b=ins[15],out=writeD);
+    And(a=ins[5],b=ins[15],out=writeA1);
+    Not(in=ins[15],out=writeA2);
+    Or(a=writeA1,b=writeA2,out=writeA);
+    
+    //we pass the instruction and output of ALU to the MUX1 and ins[15] as the selector
+
+    MUX16bit2to1(X0=ins,X1=outALU,S0=ins[15],out=outputMux1);
+
+    //We use the builtin register A  to store the output from MUX1.
+
+    ARegister(in=outputMux1,load=writeA,out[0..14]=address,out=outRegA);
+    
+    //In mux2 we pass the output from register A and inM(output of data memory) with the a bit(I12) as the selector
+
+    And(a=ins[15],b=ins[12],out=SlineMux2);
+    MUX16bit2to1(X0=outRegA,X1=inM,S0=SlineMux2,out=outputMux2);
+
+    //In register D we pass the output from the ALU
+
+    DRegister(in=outALU, load=writeD, out=outRegD);
+
+    //Finally pass the outputs from Register D and Mux2 to the Hack Alu 
+
+    HackAlu(X=outRegD,Y=outputMux2,zx=ins[11],nx=ins[10],zy=ins[9],ny=ins[8],f=ins[7],no=ins[6],out=outALU,out=outMemory,zr=zero,ng=neg);
+   
+    //checking for the jump istruction
+    Jump(j1=ins[2],j2=ins[1],j3=ins[0],zero=zero, neg=neg, out=jumpbit1);
+    
+    //we perform a jump only if first bit of instruction is 1 
+    And(a=jumpbit1,b=ins[15],out=jumpbit);
+
+    //if jumpbit is 0 then we have to increment pc by 1 thus incbit is set to 1 if jumpbit is 0 and vice versa
+    Not(in=jumpbit,out=incbit);
+
+    //change the value of pc depending on reset,jumpbit and incbit 
+    PC(in=outRegA,load=jumpbit,inc=incbit,reset=reset,out[0..14]=pc);
+
+   }

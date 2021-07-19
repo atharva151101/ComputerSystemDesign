@@ -1,0 +1,12 @@
+CHIP AND5{
+	IN a,b,c,d,e;
+	OUT out;
+
+	PARTS:
+	//This is an AND gate with 5 inputs
+	And(a=a,b=b,out=ab);
+	And(a=ab,b=c,out=abc);
+	And(a=abc,b=d,out=abcd);
+	And(a=abcd,b=e,out=out);
+	
+}

@@ -1,0 +1,12 @@
+CHIP AND4{
+	IN a,b,c,d;
+	OUT out;
+
+	PARTS:
+	//This is an AND gate with 4 inputs
+	And(a=a,b=b,out=ab);
+	And(a=ab,b=c,out=abc);
+	And(a=abc,b=d,out=out);
+	
+	
+}

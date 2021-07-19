@@ -1,0 +1,13 @@
+CHIP Xnor {
+    IN a, b;
+    OUT out;
+
+    PARTS:
+	//Xnor gate
+	Not(in=a,out=na);
+	Not(in=b,out=nb);
+	And(a=na,b=nb,out=c);
+	And(a=a,b=b,out=d);
+	Or(a=c,b=d,out=out);
+
+}

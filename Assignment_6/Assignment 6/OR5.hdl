@@ -1,0 +1,12 @@
+CHIP OR5{
+	IN a,b,c,d,e;
+	OUT out;
+
+	PARTS:
+	//This is an OR gate with 5 inputs
+	Or(a=a,b=b,out=ab);
+	Or(a=ab,b=c,out=abc);
+	Or(a=abc,b=d,out=abcd);
+	Or(a=abcd,b=e,out=out);
+	
+}

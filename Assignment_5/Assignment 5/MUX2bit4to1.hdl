@@ -1,0 +1,17 @@
+CHIP MUX2bit4to1{
+
+	IN X0[2],X1[2],X2[2],X3[2],S1,S0;
+	OUT Y0[2];
+	
+	PARTS:
+	//This MUX takes in 4, 2 bit arrays and outputs one of them
+	Not (in=S1, out=notS1);
+	Not (in=S0, out=notS0);
+	MUX2bit2to1(X0=X0,X1=X1,S0=S0,Y0=Yp0);
+	MUX2bit2to1(X0=X2,X1=X3,S0=S0,Y0=Yp1);
+	MUX2bit2to1(X0=Yp0,X1=Yp1,S0=S1,Y0=Y0);
+
+	}
+	
+
+	

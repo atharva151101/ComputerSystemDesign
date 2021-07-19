@@ -1,0 +1,25 @@
+CHIP HackAlu{
+	IN X[16],Y[16],zx,nx,zy,ny,f,no;
+	OUT out[16],zr,ng;
+
+	PARTS:
+	//This is the initial check for whether we take in X and Y or we take in 0
+	MUX16bit2to1(X0=X,X1=false,S0=zx,out=Ptemp);
+	MUX16bit2to1(X0=Y,X1=false,S0=zy,out=Qtemp);
+
+	//This is the check for whether we take in X and Y or X complement and Y complement
+	Complement(a=Ptemp,b=nx,out=P);
+	Complement(a=Qtemp,b=ny,out=Q);	
+
+	//This is the adder circuit and the and circuit
+	CLA16bitwithHT(X=P,Y=Q,AS=false,signed=true,S=PaddQ);
+	And16(a=P,b=Q,out=PandQ);
+
+	//This is the check for whether we output the and value or the add value
+	MUX16bit2to1(X0=PandQ,X1=PaddQ,S0=f,out=R);
+	
+	//This is the fianl out put checker which checks whether we should output our final value or it's complement 
+	Complement(a=R,b=no,out=out,out[15]=ng,out=tempOut);
+	
+	Check0(X=tempOut,out=zr);
+}

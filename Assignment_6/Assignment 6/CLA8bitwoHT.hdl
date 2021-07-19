@@ -1,0 +1,28 @@
+CHIP CLA8bitwoHT{
+	IN X[8],Y[8],AS,signed;
+	OUT S[8],C8,OF;
+
+	PARTS:
+
+	Xor(a=Y[0],b=AS,out=Z0);
+	Xor(a=Y[1],b=AS,out=Z1);
+	Xor(a=Y[2],b=AS,out=Z2);
+	Xor(a=Y[3],b=AS,out=Z3);
+	Xor(a=Y[4],b=AS,out=Z4);
+	Xor(a=Y[5],b=AS,out=Z5);
+	Xor(a=Y[6],b=AS,out=Z6);
+	Xor(a=Y[7],b=AS,out=Z7);	
+    
+    CLA4bit(X[0..3]=X[0..3],		Y[0]=Z0,Y[1]=Z1,Y[2]=Z2,Y[3]=Z3,	C0=AS,C=C4,		S[0..3]=S[0..3]);
+	CLA4bit(X[0..3]=X[4..7],		Y[0]=Z4,Y[1]=Z5,Y[2]=Z6,Y[3]=Z7,	C0=C4,C=C8,C=OFC8,	S[0..3]=S[4..7], C30F=C7);
+
+
+    Not(in=signed, out=unsigned);
+    Not(in=AS, out=notAS);
+    Xor(a=OFC8,b=C7,out=OFsign);
+    And(a=OFsign,b=signed,out=OFsigned);    
+    And(a=OFC8,b=unsigned,out=pOFunsigned);
+    And(a=pOFunsigned,b=notAS,out=OFunsigned);
+    Or(a=OFsigned,b=OFunsigned,out=OF);
+
+}

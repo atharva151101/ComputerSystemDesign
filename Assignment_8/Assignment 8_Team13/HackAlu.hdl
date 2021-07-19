@@ -1,0 +1,21 @@
+CHIP HackAlu{
+	IN X[16],Y[16],zx,nx,zy,ny,f,no;
+	OUT out[16],zr,ng;
+
+	PARTS:
+
+	MUX16bit2to1(X0=X,X1=false,S0=zx,out=Ptemp);
+	MUX16bit2to1(X0=Y,X1=false,S0=zy,out=Qtemp);
+
+	Complement(a=Ptemp,b=nx,out=P);
+	Complement(a=Qtemp,b=ny,out=Q);	
+
+	CLA16bitwithHT(X=P,Y=Q,AS=false,signed=true,S=PaddQ);
+	And16(a=P,b=Q,out=PandQ);
+
+	MUX16bit2to1(X0=PandQ,X1=PaddQ,S0=f,out=R);
+	
+	Complement(a=R,b=no,out=out,out[15]=ng,out=tempOut);
+	
+	Check0(X=tempOut,out=zr);
+}

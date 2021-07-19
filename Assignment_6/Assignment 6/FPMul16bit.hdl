@@ -1,0 +1,35 @@
+CHIP FPMul16bit{
+	IN X[16],Y[16];
+	OUT Z[16];
+	
+	PARTS:
+
+	//This is the sign bit
+
+	Xor(a=X[15],b=Y[15],out=Z[15]);
+
+
+//This is the mantissa multiplier with a 15 bit output - 7+7+1
+
+CSA16bitunsigned(X[0..6]=X[0..6],X[7]=true,Y[0..6]=Y[0..6],Y[7]=true,P[0]=PM00,P[1]=PM01,P[2]=PM02,P[3]=PM03,P[4]=PM04,P[5]=PM05,P[6]=PM06,P[7]=PM07,P[8]=PM08,P[9]=PM09,P[10]=PM10,P[11]=PM11,P[12]=PM12,P[13]=PM13,P[14]=PM14,P[15]=PM15);
+
+
+//This is the MUX to decide which of the 15 bits make up the product mantissa
+
+MUX8bit2to1(X00[7]=PM13,X00[6]=PM12,X00[5]=PM11,X00[4]=PM10,X00[3]=PM09,X00[2]=PM08,X00[1]=PM07,X00[0]=PM06,X01[7]=PM14,X01[6]=PM13,X01[5]=PM12,X01[4]=PM11,X01[3]=PM10,X01[2]=PM09,X01[1]=PM08,X01[0]=PM07,S0=PM15,R[1..7]=Z[0..6]);
+
+//This is the exponent addition
+	CLA8bitwoHT(X[0..7]=X[7..14],Y[0..7]=Y[7..14],AS=false,signed=false,S[7]=PE07,S[6]=PE06,S[5]=PE05,S[4]=PE04,S[3]=PE03,S[2]=PE02,S[1]=PE01,S[0]=PE00,C8=PE08);
+
+//These 2 subtractors are used to add the correct bias term
+
+Subtractor9bit(X[8]=PE08,X[7]=PE07,X[6]=PE06,X[5]=PE05,X[4]=PE04,X[3]=PE03,X[2]=PE02,X[1]=PE01,X[0]=PE00,Y[8]=false,Y[7]=false,Y[6]=true,Y[5]=true,Y[4]=true,Y[3]=true,Y[2]=true,Y[1]=true,Y[0]=true,S[8]=PFE08,S[7]=PFE07,S[6]=PFE06,S[5]=PFE05,S[4]=PFE04,S[3]=PFE03,S[2]=PFE02,S[1]=PFE01,S[0]=PFE00);
+
+Subtractor9bit(X[8]=PE08,X[7]=PE07,X[6]=PE06,X[5]=PE05,X[4]=PE04,X[3]=PE03,X[2]=PE02,X[1]=PE01,X[0]=PE00,Y[8]=false,Y[7]=false,Y[6]=true,Y[5]=true,Y[4]=true,Y[3]=true,Y[2]=true,Y[1]=true,Y[0]=false,S[8]=PSE08,S[7]=PSE07,S[6]=PSE06,S[5]=PSE05,S[4]=PSE04,S[3]=PSE03,S[2]=PSE02,S[1]=PSE01,S[0]=PSE00);
+
+
+//This MUX is used to decide which of the 2 biases is the correct one to add  - 127 or 126
+
+MUX8bit2to1(X00[7]=PFE07,X00[6]=PFE06,X00[5]=PFE05,X00[4]=PFE04,X00[3]=PFE03,X00[2]=PFE02,X00[1]=PFE01,X00[0]=PFE00,X01[7]=PSE07,X01[6]=PSE06,X01[5]=PSE05,X01[4]=PSE04,X01[3]=PSE03,X01[2]=PSE02,X01[1]=PSE01,X01[0]=PSE00,S0=PM15,R[0..7]=Z[7..14]);
+	
+}

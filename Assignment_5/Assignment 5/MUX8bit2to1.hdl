@@ -1,0 +1,11 @@
+CHIP MUX8bit2to1{
+	IN X00[8],X01[8],S0;
+	OUT R[8];
+	
+	PARTS:
+	//This MUX takes in 2, 8 bit arrays and outputs one of them
+	MUX2bit2to1(X0[0..1]=X00[0..1],X1[0..1]=X01[0..1],S0=S0,Y0[0..1]=R[0..1]);
+	MUX2bit2to1(X0[0..1]=X00[2..3],X1[0..1]=X01[2..3],S0=S0,Y0[0..1]=R[2..3]);
+	MUX2bit2to1(X0[0..1]=X00[4..5],X1[0..1]=X01[4..5],S0=S0,Y0[0..1]=R[4..5]);
+	MUX2bit2to1(X0[0..1]=X00[6..7],X1[0..1]=X01[6..7],S0=S0,Y0[0..1]=R[6..7]);
+	}

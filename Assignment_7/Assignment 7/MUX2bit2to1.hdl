@@ -1,0 +1,24 @@
+CHIP MUX2bit2to1{
+
+	IN X0[2],X1[2],S0;
+	OUT Y0[2];
+	
+	PARTS:
+	//This MUX takes in 2, 2 bit arrays and outputs one of them
+	Not (in=S0, out=notS0);
+	
+		
+	And (a=X0[0], 	b=notS0, 	out=T1);
+	And (a=X1[0], 	b=S0, 		out=T2);
+
+	Or(a=T1, b=T2, out=Y0[0]);
+	
+	And (a=X0[1], 	b=notS0, 	out=T5);
+	And (a=X1[1], 	b=S0, 		out=T6);
+
+	Or(a=T5, b=T6, out=Y0[1]);
+
+	}
+	
+
+	
